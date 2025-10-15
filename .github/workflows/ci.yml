@@ -36,12 +36,13 @@ jobs:
 
       - name: Build
         run: |
-          xcodebuild build \
+          xcodebuild clean build \
             -scheme files-to-chat-swift \
             -configuration Release \
             -destination 'platform=macOS' \
             -derivedDataPath ./dist \
-            -skipPackagePluginValidation ENABLE_PLUGIN_PREPAREMLSHADERS=YES
+            -skipPackagePluginValidation ENABLE_PLUGIN_PREPAREMLSHADERS=YES \
+            ENABLE_CODE_COVERAGE=NO
 
       - name: Prepare artifact
         run: |
