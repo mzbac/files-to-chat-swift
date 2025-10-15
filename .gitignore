@@ -1,0 +1,20 @@
+# Build artifacts
+.build/
+.xcodebuild/
+DerivedData/
+default.profraw
+
+# SwiftPM / package metadata
+.swiftpm/
+.packagePaths/
+
+# Editor and OS clutter
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Cache & logs
+*.xcresult
+.coverage/
