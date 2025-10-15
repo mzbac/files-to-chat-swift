@@ -44,12 +44,7 @@ public final class ModelSession {
             await session.loadCache(caches)
             return PrefillResult(usedCache: true, cacheURL: cacheURL, elapsed: Date().timeIntervalSince(start))
         }
-        try await session.warm(with:
-            """
-            Load the following document context into memory and reply with only "OK".
-            \(context)
-            """
-        )
+        try await session.warm(with: context)
         try await session.persistCache(using: cacheStore, context: context, precision: cachePrecision)
         return PrefillResult(usedCache: false, cacheURL: cacheURL, elapsed: Date().timeIntervalSince(start))
     }
