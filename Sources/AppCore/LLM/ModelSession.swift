@@ -31,9 +31,9 @@ public final class ModelSession {
         return ModelSession(session: chatSession, cacheStore: KVCacheStore(modelID: modelID), cachePrecision: cachePrecision)
     }
 
-    public struct PrefillResult {
+    public struct PrefillResult: Sendable {
         public let usedCache: Bool
-        public let cacheURL: URL
+        public let cachePath: String
         public let elapsed: TimeInterval
     }
 
@@ -42,11 +42,11 @@ public final class ModelSession {
         let cacheURL = cacheStore.cacheURL(for: context, precision: cachePrecision)
         if let caches = try cacheStore.loadCache(for: context, precision: cachePrecision) {
             await session.loadCache(caches)
-            return PrefillResult(usedCache: true, cacheURL: cacheURL, elapsed: Date().timeIntervalSince(start))
+            return PrefillResult(usedCache: true, cachePath: cacheURL.path, elapsed: Date().timeIntervalSince(start))
         }
         try await session.warm(with: context)
         try await session.persistCache(using: cacheStore, context: context, precision: cachePrecision)
-        return PrefillResult(usedCache: false, cacheURL: cacheURL, elapsed: Date().timeIntervalSince(start))
+        return PrefillResult(usedCache: false, cachePath: cacheURL.path, elapsed: Date().timeIntervalSince(start))
     }
 
     public func streamAnswer(question: String) -> AsyncThrowingStream<String, Error> {

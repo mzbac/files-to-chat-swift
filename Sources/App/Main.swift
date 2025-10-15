@@ -80,7 +80,7 @@ struct AppMain {
             print("Priming model session (cache precision: \(cachePrecision.filenameComponent))…")
             let prefill = try await session.prefillAndPersist(context: context)
             let reuseNote = prefill.usedCache ? "Reused cached prompt" : "Cached new prompt"
-            print(String(format: "%@ in %.2f seconds at %@", reuseNote, prefill.elapsed, prefill.cacheURL.path))
+            print(String(format: "%@ in %.2f seconds at %@", reuseNote, prefill.elapsed, prefill.cachePath))
             print("Context ready. Ask questions about the documents. Type 'exit' to quit.")
             while true {
                 fputs("> ", stdout)
